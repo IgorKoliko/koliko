@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koliko — Zarađuješ li koliko zaslužuješ?</title>
+  <meta name="description" content="Fotografiraj svoju platnu listu. Mi ti objašnjavamo svaki odbitak na bosanskom, srpskom ili hrvatskom — i kažemo ti da li si plaćen pošteno." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMic+PHJlY3Qgd2lkdGg9JzMyJyBoZWlnaHQ9JzMyJyByeD0nOCcgZmlsbD0nIzFEOUU3NScvPjx0ZXh0IHg9JzE2JyB5PScyMycgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J0dlb3JnaWEsc2VyaWYnIGZvbnQtc2l6ZT0nMjInIGZvbnQtd2VpZ2h0PSc3MDAnIGZpbGw9J3doaXRlJz5LPC90ZXh0Pjwvc3ZnPg==">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #1D9E75;
+      --green-dark: #0F6E56;
+      --green-light: #E1F5EE;
+      --green-text: #0F6E56;
+      --text-primary: #1a1a18;
+      --text-secondary: #5a5a56;
+      --text-tertiary: #9a9a94;
+      --bg: #ffffff;
+      --bg-secondary: #f7f6f2;
+      --border: rgba(0,0,0,0.1);
+      --border-strong: rgba(0,0,0,0.18);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text-primary: #f0efe9;
+        --text-secondary: #a8a8a2;
+        --text-tertiary: #6a6a64;
+        --bg: #1a1a18;
+        --bg-secondary: #242420;
+        --border: rgba(255,255,255,0.1);
+        --border-strong: rgba(255,255,255,0.18);
+        --green-light: #083526;
+        --green-text: #5DCAA5;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--green); }
+
+    .nav-label {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      font-weight: 300;
+    }
+
+    .hero {
+      padding: 5rem 2rem 3.5rem;
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green-text);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 1.75rem;
+      letter-spacing: 0.3px;
+    }
+
+    h1 {
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(34px, 6vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -1px;
+      color: var(--text-primary);
+    }
+
+    h1 em {
+      color: var(--green);
+      font-style: normal;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 2.75rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .counter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-bottom: 1.25rem;
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      opacity: 0.7;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 0.3; }
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto 0.75rem;
+    }
+
+    input[type="email"] {
+      flex: 1;
+      padding: 13px 16px;
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.15s;
+      min-width: 0;
+    }
+
+    input[type="email"]:focus {
+      border-color: var(--green);
+    }
+
+    input[type="email"]::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .btn-primary {
+      padding: 13px 22px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn-primary:hover { background: var(--green-dark); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 0.5rem;
+    }
+
+    .consent-row {
+      max-width: 440px;
+      margin: 0.75rem auto 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .consent-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .consent-label input[type="checkbox"] {
+      margin-top: 3px;
+      flex-shrink: 0;
+      width: 15px;
+      height: 15px;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+
+    .consent-label span {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .consent-label a {
+      color: var(--green-text);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--green-text);
+    }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 1rem 1.5rem;
+      background: var(--green-light);
+      border-radius: var(--radius-md);
+      color: var(--green-text);
+      font-size: 15px;
+      font-weight: 500;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .error-msg {
+      display: none;
+      font-size: 13px;
+      color: #A32D2D;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    .divider {
+      border: none;
+      border-top: 0.5px solid var(--border);
+      margin: 3.5rem 2rem;
+    }
+
+    .section {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 0 2rem 3.5rem;
+    }
+
+    .section-label {
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .steps {
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .step:last-child { border-bottom: none; }
+    .step:hover { background: var(--bg-secondary); }
+
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--green-light);
+      color: var(--green-text);
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .trust {
+      text-align: center;
+      padding: 0 2rem 5rem;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .trust-quote {
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(18px, 3vw, 22px);
+      color: var(--text-primary);
+      line-height: 1.55;
+      margin-bottom: 1rem;
+    }
+
+    .trust-author {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      font-weight: 300;
+    }
+
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .footer-logo span { color: var(--green); }
+
+    .footer-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-weight: 300;
+    }
+
+    .footer-link {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-weight: 300;
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--border);
+      padding-bottom: 1px;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: var(--text-secondary); }
+
+    .impressum-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .impressum-overlay.open { display: flex; }
+
+    .impressum-box {
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      border: 0.5px solid var(--border);
+      padding: 2rem;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+    }
+
+    .impressum-box h2 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    .impressum-box p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+
+    .impressum-box .placeholder {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin: 1rem 0;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      line-height: 1.8;
+    }
+
+    .impressum-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-tertiary);
+      line-height: 1;
+      padding: 4px 8px;
+    }
+
+    .impressum-close:hover { color: var(--text-primary); }
+
+    @media (max-width: 500px) {
+      .signup-form { flex-direction: column; }
+      .btn-primary { width: 100%; text-align: center; }
+      nav { padding: 1.25rem 1.25rem; }
+      .hero { padding: 3.5rem 1.25rem 2.5rem; }
+      .section, .trust { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .divider { margin-left: 1.25rem; margin-right: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="#">Koliko<span>.</span></a>
+    <span class="nav-label">Besplatno · Poverljivo</span>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">Za nas, na našem jeziku</div>
+    <h1>Zarađuješ li koliko<br><em>zaslužuješ?</em></h1>
+    <p class="hero-sub">Fotografiraj svoju platnu listu. Mi ti objašnjavamo svaki odbitak — na bosanskom/srpskom/hrvatskom. I kažemo ti da li si plaćen pošteno.</p>
+
+    <div class="counter">
+      <div class="dot"></div>
+      <span id="counter-text">Budi među prvima koji saznaju</span>
+    </div>
+
+    <form name="signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="signup-form" class="signup-form" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="form-name" value="signup" />
+      <input type="hidden" name="bot-field" style="display:none" />
+      <input type="email" name="email" id="email-input" placeholder="Tvoj email..." autocomplete="email" required />
+      <button type="submit" class="btn-primary">Besplatno isprobaj</button>
+    </form>
+    <div class="consent-row" id="consent-row">
+      <label class="consent-label">
+        <input type="checkbox" id="consent-check" />
+        <span>Prihvatam <a href="/datenschutz" target="_blank">Politiku privatnosti</a> i <a href="/agb" target="_blank">Opšte uslove</a></span>
+      </label>
+    </div>
+    <div class="success-msg" id="success-msg">
+      Hvala! Javićemo ti se čim bude spremno.
+    </div>
+    <div class="error-msg" id="error-msg">Molimo unesi ispravnu email adresu.</div>
+    <p class="form-note">Bez spama. Bez dijeljenja podataka. Samo obavještenje kad je aplikacija spremna.</p>
+  </section>
+
+  <hr class="divider" />
+
+  <section class="section">
+    <p class="section-label">Kako radi</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <p class="step-title">Registruj se</p>
+          <p class="step-desc">Ostavi svoj email. Mi ćemo te kontaktirati čim aplikacija bude spremna.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <p class="step-title">Fotografiraj platnu listu</p>
+          <p class="step-desc">Samo jedan snimak telefonom. Ništa više — nikakva registracija, nikakva papirologja.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <p class="step-title">Dobij objašnjenje na svom jeziku</p>
+          <p class="step-desc">Brutto, netto, Krankenversicherung, Lohnsteuer, Rentenversicherung — sve jasno i jednostavno, bez žargona.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <p class="step-title">Saznaj da li si pošteno plaćen</p>
+          <p class="step-desc">Uspoređujemo tvoju platu s prosjekom za tvoje zanimanje i regiju u Nemačkoj. Jasno i direktno.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="margin-top: 0;" />
+
+  <section class="trust">
+    <p class="trust-quote">"Napravili smo ovo jer smo<br>i sami prošli kroz to."</p>
+    <p class="trust-author">Koliko tim — Nemačka</p>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Koliko<span>.</span></div>
+    <div class="footer-right">
+      <a class="footer-link" href="/datenschutz">Datenschutz</a>
+      <a class="footer-link" href="/agb">AGB</a>
+      <a class="footer-link" href="#" onclick="document.getElementById('impressum').classList.add('open'); return false;">Impressum</a>
+      <span class="footer-text">© 2026 Koliko</span>
+    </div>
+  </footer>
+
+  <div class="impressum-overlay" id="impressum" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="impressum-box">
+      <button class="impressum-close" onclick="document.getElementById('impressum').classList.remove('open')">×</button>
+      <h2>Impressum</h2>
+      <p>Angaben gemäß § 5 TMG</p>
+      <div class="placeholder">
+        <strong style="color: var(--text-primary); font-weight: 500;">Igor Vasiljević</strong><br>
+        Prinzregentenstraße 85<br>
+        81675 München<br><br>
+        <strong style="color: var(--text-primary); font-weight: 500;">Kontakt</strong><br>
+        E-Mail: igor@koliko.de<br><br>
+        <strong style="color: var(--text-primary); font-weight: 500;">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</strong><br>
+        Igor Vasiljević<br>
+        Prinzregentenstraße 85<br>
+        81675 München<br><br>
+        <strong style="color: var(--text-primary); font-weight: 500;">Haftungsausschluss</strong><br>
+        Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Eine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch nicht übernommen werden. Diese Website befindet sich im Aufbau. Es werden derzeit keine Dienstleistungen angeboten.
+      </div>
+      <p style="font-size: 12px; color: var(--text-tertiary);">Stand: 2026</p>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const form = document.getElementById('signup-form');
+      const email = document.getElementById('email-input').value.trim();
+      const errorMsg = document.getElementById('error-msg');
+      const successMsg = document.getElementById('success-msg');
+      const consent = document.getElementById('consent-check');
+
+      errorMsg.style.display = 'none';
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('email-input').style.borderColor = '#E24B4A';
+        errorMsg.textContent = 'Molimo unesi ispravnu email adresu.';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      if (!consent.checked) {
+        errorMsg.textContent = 'Molimo prihvati Politiku privatnosti i Opšte uslove.';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      const data = new FormData(form);
+      fetch('/', { method: 'POST', body: data })
+        .then(() => {
+          form.style.display = 'none';
+          document.getElementById('consent-row').style.display = 'none';
+          successMsg.style.display = 'block';
+          document.getElementById('counter-text').textContent = 'Hvala što si tu!';
+        })
+        .catch(() => {
+          errorMsg.textContent = 'Greška. Pokušaj ponovo.';
+          errorMsg.style.display = 'block';
+        });
+    }
+
+    document.getElementById('email-inp

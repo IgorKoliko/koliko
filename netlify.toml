@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+
+[[triggers]]
+  event = "submission-created"
+  function = "form-submit"
