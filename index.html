@@ -477,11 +477,11 @@
   <section class="hero">
     <div class="badge">Za nas, na našem jeziku</div>
     <h1>Zarađuješ li koliko<br><em>zaslužuješ?</em></h1>
-    <p class="hero-sub">Fotografiraj svoju platnu listu. Mi ti objašnjavamo svaki odbitak — na bosanskom/srpskom/hrvatskom. I kažemo ti da li si plaćen pošteno.</p>
+    <p class="hero-sub">Mnogi zarađuju premalo — i toga uopšte nisu svesni. Uz Koliko saznajte brzo, jednostavno i potpuno besplatno gde stojite u platnom rangu. Samo fotografišite svoju platnu listu i mi ćemo vam reći da li ste pošteno plaćeni — na srpskom/bosanskom/hrvatskom.</p>
 
     <div class="counter">
       <div class="dot"></div>
-      <span id="counter-text">Budi među prvima koji saznaju</span>
+      <span id="counter-text">Budi pametan — znaj gde stojiš</span>
     </div>
 
     <form name="signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="signup-form" class="signup-form" onsubmit="handleSubmit(event)">
@@ -490,17 +490,19 @@
       <input type="email" name="email" id="email-input" placeholder="Tvoj email..." autocomplete="email" required />
       <button type="submit" class="btn-primary">Besplatno isprobaj</button>
     </form>
-    <div class="consent-row" id="consent-row">
+    <div class="consent-row" id="consent-row" style="margin-top: 1.25rem;">
       <label class="consent-label">
         <input type="checkbox" id="consent-check" />
         <span>Prihvatam <a href="/datenschutz" target="_blank">Politiku privatnosti</a> i <a href="/agb" target="_blank">Opšte uslove</a></span>
       </label>
     </div>
     <div class="success-msg" id="success-msg">
-      Hvala! Javićemo ti se čim bude spremno.
+      Hvala! Prijava je primljena.<br>
+      <span style="font-size: 13px; font-weight: 300; display: block; margin-top: 0.4rem;">Proverite vaš inbox — poslali smo vam email.</span>
+      <a href="mailto:" id="open-mail-btn" style="display:inline-block;margin-top:0.75rem;background:var(--green);color:white;padding:9px 18px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:500">Otvori email →</a>
     </div>
     <div class="error-msg" id="error-msg">Molimo unesi ispravnu email adresu.</div>
-    <p class="form-note">Bez spama. Bez dijeljenja podataka. Samo obavještenje kad je aplikacija spremna.</p>
+    <p class="form-note" style="margin-top: 1.25rem;">Bez spama. Bez deljenja podataka. Samo obaveštenje kad je aplikacija spremna.</p>
   </section>
 
   <hr class="divider" />
@@ -566,7 +568,7 @@
         Prinzregentenstraße 85<br>
         81675 München<br><br>
         <strong style="color: var(--text-primary); font-weight: 500;">Kontakt</strong><br>
-        E-Mail: igor@koliko.de<br><br>
+        E-Mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="deb7b9b1ac9eb5b1b2b7b5b1f0babb">[email&#160;protected]</a><br><br>
         <strong style="color: var(--text-primary); font-weight: 500;">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</strong><br>
         Igor Vasiljević<br>
         Prinzregentenstraße 85<br>
@@ -578,7 +580,7 @@
     </div>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>    <script>
     function handleSubmit(e) {
       e.preventDefault();
       const form = document.getElementById('signup-form');
@@ -588,16 +590,17 @@
       const consent = document.getElementById('consent-check');
 
       errorMsg.style.display = 'none';
+      document.getElementById('email-input').style.borderColor = '';
 
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         document.getElementById('email-input').style.borderColor = '#E24B4A';
-        errorMsg.textContent = 'Molimo unesi ispravnu email adresu.';
+        errorMsg.textContent = 'Molimo unesite ispravnu email adresu.';
         errorMsg.style.display = 'block';
         return;
       }
 
       if (!consent.checked) {
-        errorMsg.textContent = 'Molimo prihvati Politiku privatnosti i Opšte uslove.';
+        errorMsg.textContent = 'Molimo prihvatite Politiku privatnosti i Opšte uslove.';
         errorMsg.style.display = 'block';
         return;
       }
@@ -611,9 +614,17 @@
           document.getElementById('counter-text').textContent = 'Hvala što si tu!';
         })
         .catch(() => {
-          errorMsg.textContent = 'Greška. Pokušaj ponovo.';
+          errorMsg.textContent = 'Greška. Pokušajte ponovo.';
           errorMsg.style.display = 'block';
         });
     }
 
-    document.getElementById('email-inp
+    document.getElementById('email-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('signup-form').dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}));
+      }
+    });
+  </script>
+
+</body>
+</html>
