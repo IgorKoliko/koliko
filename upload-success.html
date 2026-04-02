@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koliko — Hvala!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMic+PHJlY3Qgd2lkdGg9JzMyJyBoZWlnaHQ9JzMyJyByeD0nOCcgZmlsbD0nIzFEOUU3NScvPjx0ZXh0IHg9JzE2JyB5PScyMycgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J0dlb3JnaWEsc2VyaWYnIGZvbnQtc2l6ZT0nMjInIGZvbnQtd2VpZ2h0PSc3MDAnIGZpbGw9J3doaXRlJz5LPC90ZXh0Pjwvc3ZnPg==">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --green: #1D9E75; --green-light: #E1F5EE; --green-text: #0F6E56; --text-primary: #1a1a18; --text-secondary: #5a5a56; --text-tertiary: #9a9a94; --bg: #ffffff; --border: rgba(0,0,0,0.1); --radius-md: 8px; }
+    @media (prefers-color-scheme: dark) { :root { --text-primary: #f0efe9; --text-secondary: #a8a8a2; --text-tertiary: #6a6a64; --bg: #1a1a18; --border: rgba(255,255,255,0.1); --green-light: #083526; --green-text: #5DCAA5; } }
+    body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 0.5px solid var(--border); }
+    .logo { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); text-decoration: none; }
+    .logo span { color: var(--green); }
+    .nav-label { font-size: 13px; color: var(--text-tertiary); font-weight: 300; }
+    .hero { padding: 5rem 2rem; max-width: 620px; margin: 0 auto; text-align: center; }
+    .success-box { background: var(--green-light); border-radius: var(--radius-md); padding: 2rem 2.5rem; max-width: 480px; margin: 0 auto; }
+    .success-title { font-size: 18px; font-weight: 500; color: var(--green-text); margin-bottom: 0.5rem; }
+    .success-sub { font-size: 14px; color: var(--green-text); font-weight: 300; line-height: 1.6; }
+    .back-link { display: inline-block; margin-top: 2rem; font-size: 14px; color: var(--text-tertiary); text-decoration: none; }
+    .back-link:hover { color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="/">Koliko<span>.</span></a>
+    <span class="nav-label">Besplatno · Poverljivo</span>
+  </nav>
+  <section class="hero">
+    <div class="success-box">
+      <p class="success-title">Hvala! Primili smo sve podatke.</p>
+      <p class="success-sub">Javićemo Vam se uskoro sa povratnom informacijom o Vašoj platnoj listi.</p>
+    </div>
+    <a class="back-link" href="/">← Nazad na koliko.de</a>
+  </section>
+</body>
+</html>
