@@ -91,12 +91,6 @@
 </nav>
 
 <div class="container">
-  <div class="privacy-note">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <p class="privacy-text">Tvoji podaci se koriste isključivo za analizu tvoje plate i nikada ih ne delimo s trećim stranama. Možeš zahtevati brisanje u svakom trenutku.</p>
-  </div>
-
-  <h1>Pošalji svoju platnu listu</h1>
 
   <form id="upload-form" name="upload" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" action="/upload-success">
     <input type="hidden" name="form-name" value="upload" />
@@ -186,7 +180,7 @@
       Prinzregentenstraße 85<br>
       81675 München<br><br>
       <strong style="color: var(--text-primary); font-weight: 500;">Kontakt</strong><br>
-      E-Mail: igor@koliko.de<br><br>
+      E-Mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="137a747c6153787c7f7a787c3d7776">[email&#160;protected]</a><br><br>
       <strong style="color: var(--text-primary); font-weight: 500;">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</strong><br>
       Igor Vasiljević<br>
       Prinzregentenstraße 85<br>
@@ -198,7 +192,7 @@
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   var fileInput = document.getElementById('file-input');
   var uploadArea = document.getElementById('upload-area');
   var filenameEl = document.getElementById('upload-filename');
@@ -250,12 +244,4 @@
       })
       .catch(function() {
         btn.disabled = false;
-        btn.textContent = 'Pošalji na analizu';
-        document.getElementById('err-consent').textContent = '⚠ Greška. Pokušajte ponovo.';
-        document.getElementById('err-consent').style.display = 'block';
-      });
-  });
-</script>
-
-</body>
-</html>
+        btn.textContent = 'Pošalji
