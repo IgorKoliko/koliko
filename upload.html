@@ -551,7 +551,14 @@
       </div>
 
       <button type="submit" class="btn-submit" id="submit-btn">Pošalji na analizu</button>
-      <p class="error-msg" id="error-msg">Nešto je pošlo naopako. Pokušaj ponovo.</p>
+      <div id="validation-errors" style="display:none; margin-top:0.75rem;">
+        <p id="err-name" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo unesite Vaše ime i prezime.</p>
+        <p id="err-email" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo unesite ispravnu email adresu.</p>
+        <p id="err-zanimanje" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo odaberite Vaše zanimanje.</p>
+        <p id="err-file" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo priložite Vašu platnu listu.</p>
+        <p id="err-consent" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo prihvatite Politiku privatnosti i Opšte uslove.</p>
+      </div>
+      <p class="error-msg" id="error-msg" style="display:none;">Nešto je pošlo naopako. Pokušajte ponovo.</p>
     </form>
 
     <div class="success-card" id="success-card">
@@ -560,8 +567,8 @@
           <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <p class="success-title">Hvala, primili smo tvoju platnu listu!</p>
-      <p class="success-sub">Analiziraćemo je i javiti ti se na tvoj email u roku od 48 sati.</p>
+      <p class="success-title">Hvala! Sve smo primili.</p>
+      <p class="success-sub">Analiziraćemo Vašu platnu listu i javićemo Vam se uskoro sa povratnom informacijom.</p>
     </div>
   </div>
 
@@ -585,7 +592,7 @@
         Prinzregentenstraße 85<br>
         81675 München<br><br>
         <strong style="color: var(--text-primary); font-weight: 500;">Kontakt</strong><br>
-        E-Mail: igor@koliko.de<br><br>
+        E-Mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cba2aca4b98ba0a4a7a2a0a4e5afae">[email&#160;protected]</a><br><br>
         <strong style="color: var(--text-primary); font-weight: 500;">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</strong><br>
         Igor Vasiljević<br>
         Prinzregentenstraße 85<br>
@@ -597,7 +604,7 @@
     </div>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const fileInput = document.getElementById('file-input');
     const uploadArea = document.getElementById('upload-area');
     const filename = document.getElementById('upload-filename');
@@ -631,11 +638,28 @@
       const errorMsg = document.getElementById('error-msg');
       const consent = document.getElementById('consent-check');
 
+      // Hide all errors first
       errorMsg.style.display = 'none';
+      document.getElementById('validation-errors').style.display = 'none';
+      ['err-name','err-email','err-zanimanje','err-file','err-consent'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
 
-      if (!consent.checked) {
-        errorMsg.textContent = 'Molimo prihvati Politiku privatnosti i Opšte uslove.';
-        errorMsg.style.display = 'block';
+      // Validate all fields
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const zanimanje = document.getElementById('beruf').value;
+      const file = document.getElementById('file-input').files[0];
+      let hasError = false;
+
+      if (!name) { document.getElementById('err-name').style.display = 'block'; hasError = true; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('err-email').style.display = 'block'; hasError = true; }
+      if (!zanimanje) { document.getElementById('err-zanimanje').style.display = 'block'; hasError = true; }
+      if (!file) { document.getElementById('err-file').style.display = 'block'; hasError = true; }
+      if (!consent.checked) { document.getElementById('err-consent').style.display = 'block'; hasError = true; }
+
+      if (hasError) {
+        document.getElementById('validation-errors').style.display = 'block';
         return;
       }
 
@@ -646,10 +670,4 @@
         const formData = new FormData(this);
         const response = await fetch('/', { method: 'POST', body: formData });
         if (response.ok) {
-          document.getElementById('upload-form').style.display = 'none';
-          document.getElementById('success-card').style.display = 'block';
-        } else {
-          throw new Error();
-        }
-      } catch {
-        btn.disabl
+          doc
