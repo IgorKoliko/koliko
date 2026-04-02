@@ -488,6 +488,657 @@
       <p class="privacy-text">Tvoji podaci se koriste isključivo za analizu tvoje plate i nikada ih ne delimo s trećim stranama. Možeš zahtevati brisanje u svakom trenutku.</p>
     </div>
 
+    <form id="upload-form" name="upload" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" action="/upload-success">
+      <input type="hidden" name="form-name" value="upload" />
+      <input type="hidden" name="bot-field" style="display:none" />
+
+      <div class="form-card">
+        <div class="form-row">
+          <label for="name">Ime i prezime</label>
+          <input type="text" id="name" name="name" placeholder="npr. Marko Marković" required />
+        </div>
+        <div class="form-row">
+          <label for="email">Email adresa</label>
+          <input type="email" id="email" name="email" placeholder="tvoj@email.com" required />
+        </div>
+        <div class="form-row">
+          <label for="beruf">Zanimanje</label>
+          <select id="beruf" name="zanimanje" required>
+            <option value="" disabled selected>Odaberi zanimanje...</option>
+            <option value="njega">Njega / Pflege</option>
+            <option value="logistika">Logistika / Transport</option>
+            <option value="gradjevina">Građevina / Handwerk</option>
+            <option value="ugostiteljstvo">Ugostiteljstvo / Gastronomie</option>
+            <option value="ured">Ured / Büro</option>
+            <option value="ostalo">Ostalo / Sonstiges</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Platna lista</label>
+          <div class="upload-area" id="upload-area">
+            <input type="file" name="platna-lista" id="file-input" accept=".pdf,.jpg,.jpeg,.png,image/*" required />
+            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 16V8m0 0l-3 3m3-3l3 3M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <p class="upload-title">Prevuci datoteku ili klikni ovdje</p>
+            <p class="upload-sub">PDF ili fotografija · max. 10 MB</p>
+            <div class="upload-hint">
+              <span class="upload-hint-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                Fotografija
+              </span>
+              <span class="upload-hint-sep">·</span>
+              <span class="upload-hint-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                Kamera
+              </span>
+              <span class="upload-hint-sep">·</span>
+              <span class="upload-hint-item">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+                PDF
+              </span>
+            </div>
+            <p class="upload-filename" id="upload-filename"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="consent-row">
+        <label class="consent-label">
+          <input type="checkbox" id="consent-check" />
+          <span>Prihvatam <a href="/datenschutz" target="_blank">Politiku privatnosti</a> i <a href="/agb" target="_blank">Opšte uslove</a> i saglasan/na sam da se moji podaci koriste za analizu plate</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn">Pošalji na analizu</button>
+      <div id="validation-errors" style="display:none; margin-top:0.75rem;">
+        <p id="err-name" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo unesite Vaše ime i prezime.</p>
+        <p id="err-email" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo unesite ispravnu email adresu.</p>
+        <p id="err-zanimanje" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo odaberite Vaše zanimanje.</p>
+        <p id="err-file" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo priložite Vašu platnu listu.</p>
+        <p id="err-consent" style="display:none; color:#A32D2D; font-size:13px; margin-bottom:4px;">⚠ Molimo prihvatite Politiku privatnosti i Opšte uslove.</p>
+      </div>
+      <p class="error-msg" id="error-msg" style="display:none;">Nešto je pošlo naopako. Pokušajte ponovo.</p>
+    </form>
+
+    <div class="success-card" id="success-card">
+      <div class="success-check">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+          <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="success-title">Hvala! Sve smo primili.</p>
+      <p class="success-sub">Analiziraćemo Vašu platnu listu i javićemo Vam se uskoro sa povratnom informacijom.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Koliko<span>.</span></div>
+    <div class="footer-right">
+      <a class="footer-link" href="/datenschutz">Datenschutz</a>
+      <a class="footer-link" href="/agb">AGB</a>
+      <a class="footer-link" href="#" onclick="document.getElementById('impressum').classList.add('open'); return false;">Impressum</a>
+      <span class="footer-text">© 2026 Koliko</span>
+    </div>
+  </footer>
+
+  <div class="impressum-overlay" id="impressum" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="impressum-box">
+      <button class="impressum-close" onclick="document.getElementById('impressum').classList.remove('open')">×</button>
+      <h2>Impressum</h2>
+      <p>Angaben gemäß § 5 TMG</p>
+      <div class="imp-content">
+        <strong style="color: var(--text-primary); font-weight: 500;">Igor Vasiljević</strong><br>
+        Prinzregentenstraße 85<br>
+        81675 München<br><br>
+        <strong style="color: var(--text-primary); font-weight: 500;">Kontakt</strong><br>
+        E-Mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cba2aca4b98ba0a4a7a2a0a4e5afae">[email&#160;protected]</a><br><br>
+        <strong style="color: var(--text-primary); font-weight: 500;">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</strong><br>
+        Igor Vasiljević<br>
+        Prinzregentenstraße 85<br>
+        81675 München<br><br>
+        <strong style="color: var(--text-primary); font-weight: 500;">Haftungsausschluss</strong><br>
+        Die Inhalte dieser Website wurden mit größtmöglicher Sorgfalt erstellt. Eine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch nicht übernommen werden. Diese Website befindet sich im Aufbau. Es werden derzeit keine Dienstleistungen angeboten.
+      </div>
+      <p style="font-size: 12px; color: var(--text-tertiary);">Stand: 2026</p>
+    </div>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const fileInput = document.getElementById('file-input');
+    const uploadArea = document.getElementById('upload-area');
+    const filename = document.getElementById('upload-filename');
+
+    fileInput.addEventListener('change', function() {
+      if (this.files[0]) {
+        filename.textContent = this.files[0].name;
+        filename.style.display = 'block';
+      }
+    });
+
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      if (e.dataTransfer.files[0]) {
+        fileInput.files = e.dataTransfer.files;
+        filename.textContent = e.dataTransfer.files[0].name;
+        filename.style.display = 'block';
+      }
+    });
+
+    document.getElementById('upload-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      const errorMsg = document.getElementById('error-msg');
+      const consent = document.getElementById('consent-check');
+
+      // Hide all errors first
+      errorMsg.style.display = 'none';
+      document.getElementById('validation-errors').style.display = 'none';
+      ['err-name','err-email','err-zanimanje','err-file','err-consent'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+
+      // Validate all fields
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const zanimanje = document.getElementById('beruf').value;
+      const file = document.getElementById('file-input').files[0];
+      let hasError = false;
+
+      if (!name) { document.getElementById('err-name').style.display = 'block'; hasError = true; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('err-email').style.display = 'block'; hasError = true; }
+      if (!zanimanje) { document.getElementById('err-zanimanje').style.display = 'block'; hasError = true; }
+      if (!file) { document.getElementById('err-file').style.display = 'block'; hasError = true; }
+      if (!consent.checked) { document.getElementById('err-consent').style.display = 'block'; hasError = true; }
+
+      if (hasError) {
+        document.getElementById('validation-errors').style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Šaljem...';
+
+      try {
+        const formData = new FormData(this);
+        const response = await fetch('/', { method: 'POST', body: formData });
+        if (response.ok) {
+          document.getElementById('upload-form').style.display = 'none';
+          document.getElementById('success-card').style.display = 'block';
+        } else {
+          throw new Error();
+        }
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Pošalji na analizu';
+        errorMsg.textContent = 'Nešto je pošlo naopako. Pokušajte ponovo.';
+        errorMsg.style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>        --bg-secondary: #242420;
+        --border: rgba(255,255,255,0.1);
+        --border-strong: rgba(255,255,255,0.18);
+        --green-light: #083526;
+        --green-text: #5DCAA5;
+      }
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--green); }
+
+    .nav-label {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      font-weight: 300;
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 5rem;
+    }
+
+    .container .badge,
+    .container h1,
+    .container .subtitle {
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--green-light);
+      color: var(--green-text);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.3px;
+    }
+
+    h1 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+    }
+
+    .subtitle {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .form-row {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .form-row:last-child { border-bottom: none; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+
+    input:focus, select:focus { border-color: var(--green); }
+
+    input::placeholder { color: var(--text-tertiary); }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a94' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    .upload-area {
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      background: var(--bg-secondary);
+      position: relative;
+    }
+
+    .upload-area:hover, .upload-area.dragover {
+      border-color: var(--green);
+      background: var(--green-light);
+    }
+
+    .upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-icon {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 0.75rem;
+      color: var(--text-tertiary);
+    }
+
+    .upload-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .upload-sub {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-weight: 300;
+    }
+
+    .upload-filename {
+      display: none;
+      font-size: 13px;
+      color: var(--green-text);
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
+
+    .upload-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 0.75rem;
+    }
+
+    .upload-hint-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-weight: 300;
+    }
+
+    .upload-hint-sep {
+      font-size: 12px;
+      color: var(--border-strong);
+    }
+
+    .privacy-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 1rem 1.5rem;
+      background: var(--green-light);
+      border-top: 0.5px solid var(--border);
+    }
+
+    .privacy-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--green-text);
+    }
+
+    .privacy-text {
+      font-size: 12px;
+      color: var(--green-text);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 1.25rem;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn-submit:hover { background: var(--green-dark); }
+    .btn-submit:active { transform: scale(0.99); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .success-card {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--green-light);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+
+    .success-check {
+      width: 48px;
+      height: 48px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .success-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .success-sub {
+      font-size: 15px;
+      color: var(--text-secondary);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .error-msg {
+      font-size: 13px;
+      color: #A32D2D;
+      margin-top: 0.75rem;
+      display: none;
+      text-align: center;
+    }
+
+    .consent-row {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .consent-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .consent-label input[type="checkbox"] {
+      margin-top: 3px;
+      flex-shrink: 0;
+      width: 15px;
+      height: 15px;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+
+    .consent-label span {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .consent-label a {
+      color: var(--green-text);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--green-text);
+    }
+
+    @media (max-width: 500px) {
+      .container { padding: 2.5rem 1.25rem 4rem; }
+      nav { padding: 1.25rem; }
+    }
+
+    footer {
+      border-top: 0.5px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .footer-logo span { color: var(--green); }
+
+    .footer-right { display: flex; align-items: center; gap: 1.25rem; }
+
+    .footer-text { font-size: 12px; color: var(--text-tertiary); font-weight: 300; }
+
+    .footer-link {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-weight: 300;
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--border);
+      padding-bottom: 1px;
+      transition: color 0.15s;
+    }
+
+    .footer-link:hover { color: var(--text-secondary); }
+
+    .impressum-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .impressum-overlay.open { display: flex; }
+
+    .impressum-box {
+      background: var(--bg);
+      border-radius: var(--radius-lg);
+      border: 0.5px solid var(--border);
+      padding: 2rem;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+    }
+
+    .impressum-box h2 {
+      font-family: 'Roboto', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    .impressum-box p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 0.5rem;
+    }
+
+    .impressum-box .imp-content {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin: 1rem 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .impressum-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-tertiary);
+      line-height: 1;
+      padding: 4px 8px;
+    }
+
+    .impressum-close:hover { color: var(--text-primary); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="/">Koliko<span>.</span></a>
+    <span class="nav-label">Besplatno · Poverljivo</span>
+  </nav>
+
+  <div class="container">
+    <div style="text-align: center;"><div class="badge">Besplatna analiza plate</div></div>
+    <h1>Pošalji svoju platnu listu</h1>
+    <div class="privacy-note" style="margin-bottom: 2rem; border-radius: var(--radius-md);">
+      <svg class="privacy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="privacy-text">Tvoji podaci se koriste isključivo za analizu tvoje plate i nikada ih ne delimo s trećim stranama. Možeš zahtevati brisanje u svakom trenutku.</p>
+    </div>
+
     <form id="upload-form" name="upload" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
       <input type="hidden" name="form-name" value="upload" />
       <input type="hidden" name="bot-field" style="display:none" />
