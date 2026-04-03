@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Koliko — Zarađuješ li koliko zaslužuješ?</title>
+  <meta property="og:title" content="Koliko — Zarađujete li koliko zaslužujete?" />
+  <meta property="og:description" content="Saznajte brzo i besplatno gde stojite u platnom rangu za Vaše zanimanje u Nemačkoj — na srpskom, bosanskom ili hrvatskom." />
+  <meta property="og:image" content="https://koliko.de/og-image.png" />
+  <meta property="og:url" content="https://koliko.de" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://koliko.de/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -187,7 +194,7 @@
       Prinzregentenstraße 85<br>
       81675 München<br><br>
       <strong style="color: var(--text-primary); font-weight: 500;">Kontakt</strong><br>
-      E-Mail: igor@koliko.de<br><br>
+      E-Mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d8b1bfb7aa98b3b7b4b1b3b7f6bcbd">[email&#160;protected]</a><br><br>
       <strong style="color: var(--text-primary); font-weight: 500;">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</strong><br>
       Igor Vasiljević<br>
       Prinzregentenstraße 85<br>
@@ -199,7 +206,7 @@
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   function handleSubmit(e) {
     e.preventDefault();
     var email = document.getElementById('email-input').value.trim();
@@ -229,14 +236,14 @@
         document.getElementById('consent-row').style.display = 'none';
         document.getElementById('error-msg').style.display = 'none';
         document.getElementById('success-msg').style.display = 'block';
-        document.getElementById('counter-text').textContent = 'Hvala što si tu!';
-      })
-      .catch(function() {
-        errorMsg.textContent = '⚠ Greška. Pokušajte ponovo.';
-        errorMsg.style.display = 'block';
-      });
-  }
-</script>
+        document.getElementById('counter-text').textContent = 'Hvala sto si tu!';
+        })
+        .catch(function() {
+          errorMsg.textContent = 'Greska. Pokusajte ponovo.';
+          errorMsg.style.display = 'block';
+        });
+    }
+  </script>
 
 </body>
 </html>
